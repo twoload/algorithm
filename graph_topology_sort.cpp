@@ -20,8 +20,8 @@ void topology_sort()
 {
     queue<int> q;
     for(int i=1; i<=n; ++i){
-        if (ind[i] == 0)
-            q.push(i);
+        if (ind[i] == 0) // find indegree 0
+            q.push(i); 
     }
     while(!q.empty()){
         int x = q.front();
@@ -29,8 +29,8 @@ void topology_sort()
         printf("%d ", x);
         for(int i=0; i<a[x].size(); i++){
             int y = a[x][i];
-            ind[y] -= 1;
-            if (ind[y] == 0)
+            ind[y] -= 1; // decrease indegree
+            if (ind[y] == 0) // find indegree 0
                 q.push(y);
         }
     }
@@ -43,7 +43,7 @@ int main()
         int u, v;
         scanf("%d %d", &u, &v); // u->v
         a[u].push_back(v);
-        ind[v]++;
+        ind[v]++; // update indegree when making graph!!!
     }
     topology_sort();
     return 0;
