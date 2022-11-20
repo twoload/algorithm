@@ -7,34 +7,50 @@
 # 0<=i<j<N, s[i]=='A' && s[j]=='B' (i,j) pair num = K
 # N (2~50), K (0 ~ N*(N-1)/2)
 
-# 3 2
-# ABB
+# 5 3
+# BABBB
 #
-# BBBB : b
-# ABBBB -> 4(b)
-# BABBB -> 3(b-1)
-# BBBBA -> 0
-# [0,axb] : max = a*b
-
-#        B B B B
-#      ^  ^ ^ ^ ^
-# i: 4(b) 3 2 1 0
-# cnt[i] = num when A is in i-th 
+# a   : 0,1,2,3,4,5
+# b   : 5,4,3,2,1,0
+# axb : 0,4,6,6,4,0
+# k=3 : x,o,o,o,o,x
+#
+# a=1,b=4,k=3
+#   x=3
+#   cnt[3]=1
+#   k=0
+#
+# i=4, cnt[4]=0
+#   B 
+# i=3, cnt[3]=1
+#   BAB
+# i=2, cnt[2]=0
+#   BABB
+# i=1, cnt[1]=0
+#   BABBB
+# i=0
+#
+# 5 5
+# ABABB
+# a   : 0,1,2,3,4,5
+# b   : 5,4,3,2,1,0
+# k=5 : x,x,o,o,x,x
+#
+# a=2,b=3,k=5
+# x=3
+# cnt[3]=1
+# k=5-3=2
+# x=2
+# cnt[2]=1
+# k=0
+#
+# i=3, cnt[3]=1 // A BBB
+#   AB
+# i=2, cnt[2]=1 // A BBB, A BB
+#   ABAB
+# i=1, cnt[1]=0 
+#   ABABB    
 n, k = map(int, input().split())
-# a : 0 ~ n
-#
-# ex. n = 4, k = 3 
-#   B   B
-# a = 0 , b = 4 (a*b=0 < 3 : x)
-# a = 1 , b = 3 (3 < 3 : x)
-# a = 2 , b = 2 (4 < 3 : O) --> (*) 
-# a = 3 , b = 1 (x)
-# a = 4 , b = 0 (x)
-#
-# i = 0, a = 2, b = 2 : x = min(2,3) = 2, cnt[2] += 1, k-=2 = 3-2=1
-# i = 1, a = 2, b = 2 : x = 2, cnt[2] +=1, k-=2 = 1-2=-1
-
-
 for a in range(0, n+1): # all cases because we don't know b (num of B)
     b = n - a
     if a*b < k: # 0<=k<=a*b
@@ -47,7 +63,7 @@ for a in range(0, n+1): # all cases because we don't know b (num of B)
     for i in range(b, -1, -1):
         for j in range(cnt[i]):
             print('A', end='')
-        if i > 0:
+        if i > 0: # skip if num of b is 0
             print('B', end='')
     print()
     exit()
