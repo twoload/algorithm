@@ -71,7 +71,7 @@ bool cross(Line l1, Line l2) {
         // p3 <= p2 and p1 <= p4
         return l2.first <= l1.second && l1.first <= l2.second;
     }
-    return l1l2 < 0 && l2l1 < 0;
+    return l1l2 <= 0 && l2l1 <= 0;
 }
 
 int main() {
