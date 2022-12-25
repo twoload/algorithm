@@ -27,18 +27,23 @@ int lca(int u, int v) {
         swap(u, v);
     } 
     int log = 1;
-    for (log = 1; (1<<log) <= depth[u]; log++);
+    // root(1)'s depth = 0
+    // if u's depth == 4, 0-1-2-3-4, log = 3-1 = 2 (O)
+    //    because log becomes 3 by log++ when exiting for loop
+    //            need to minus 1
+    for (log = 1; (1<<log) <= depth[u]; log++); // max height
     log-=1;
     for (int i=log; i>=0; i--) {
-        if (depth[u] - (1<<i) >= depth[v]) {
-            u = p[u][i];
+        if (depth[u] - (1<<i) >= depth[v]) { // not to over v's depth
+            u = p[u][i]; // by already found p[u][i]
         }
     }
-    if (u == v) {
+    if (u == v) { // if v is parent of u, exit
         return u;
     } else {
         for (int i=log; i>=0; i--) {
-            if (p[u][i] != 0 && p[u][i] != p[v][i]) {
+            // p[u][i] == 0 > no ancestor
+            if (p[u][i] != 0 && p[u][i] != p[v][i]) { // until no same
                 u = p[u][i];
                 v = p[v][i];
             }
@@ -80,8 +85,31 @@ int main()
     for (int i=1; i<=n; i++) {
         p[i][0] = parent[i]; // node i's 2^0(=1) ancestor = parent 
     }
-    for (int j=1; (1<<j) < n; j++) {
-        for (int i=1; i<=n; i++) {
+    // 1--2--3--4--5
+    // > j = 1~2 
+    // > p[1][1] = p[p[1][0]][0] = 0 (p[1][0]=0)
+    // > p[2][1] = p[p[2][0]][0] = 0 (p[2][0]=1)
+    // ...
+    // > p[5][1] = p[p[5][0]][0] = 3 (p[5][0]=4)
+    // > p[1][2] = 0
+    // ...
+    // > p[5][2] = 1
+    // 1--2--3--4
+    // > j = 1
+    // > p[1][1] = 0
+    // > p[2][1] = 0
+    // > p[3][1] = 1
+    // > p[4][1] = 2
+    // why (1<<j) < n ? <=> (1<<j) <= n-1
+    //     because it includes start point 1
+    //     because to jump from 1, calculation is needed except start point
+    //     ex. 1-2-3-4-5 : 1->3->5 (2) : (5-1)>>2 (O)
+    //     ex. 1-2-3-4   : 1->3 (1) : (4-1)>>2 (x), (4-1)>>1 (O)  
+    for (int j=1; (1<<j) < n; j++) { // it's ok even if (1<<j) <= n because it will be 0
+        for (int i=1; i<=n; i++) { // 1~n
+            // it is to prevent meaningless work
+            // even if removing 'p[i][j-1] != 0', it is ok
+            // because if p[i][j-1] == 0, p[i][j] = 0
             if (p[i][j-1] != 0) { //until root 1, parent[1] = 0
                 p[i][j] = p[p[i][j-1]][j-1]; // 2^i = 2^(i-1) + 2^(i-1) = 2^(i-1)'s ancestor's 2^(i-1)'s ancestor
             }
