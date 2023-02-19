@@ -45,6 +45,9 @@ int main() {
     for (int i=0; i<n; i++) {
         group[0][i] = s[i];
     }
+    // aabb
+    //   -  b/bb = bb
+    //    - b/b? = b(-1) min -> b < bb
     group[0][n] = -1; // 0~n-1: n=earlier
     int last = 0;
     for (int k=0, len=1; len/2 < n; len*=2, k++) { // 1>>2>>4>>8...
@@ -77,6 +80,10 @@ int main() {
             ans -= (long long)lcp(n, group, last, sa[i-1], sa[i]);
         }
     }
+    for(int i=0; i<sa.size(); i++) {
+        printf("%d ", sa[i]);
+    }
+    printf("\n");
 #if 0
     int lcp(int n, vector<vector<int>> &group, int k, int i, int j) {
         int ans = 0;
