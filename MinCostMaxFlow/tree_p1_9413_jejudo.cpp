@@ -155,9 +155,9 @@ int main() {
             mcmf.add_edge(2*n+2, in_node(i), 1, 0);
             mcmf.add_edge(out_node(i), 2*n+3, 1, 0);
         }
-        mcmf.add_edge_from_source(2*n+2, 2, 0);
-        mcmf.add_edge_to_sink(2*n+3, 2, 0);
-        cout << -mcmf.flow().second << '\n';
+        mcmf.add_edge_from_source(2*n+2, 2, 0); // limit to 2
+        mcmf.add_edge_to_sink(2*n+3, 2, 0); // limit to 2
+        cout << -mcmf.flow().second << '\n'; // MAX
     }
     return 0;
 }

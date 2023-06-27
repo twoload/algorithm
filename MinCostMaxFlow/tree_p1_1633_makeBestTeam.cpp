@@ -159,12 +159,12 @@ int main() {
     int black = n;
     int white = n+1;
     for (int i=0; i<n; i++) {
-        mcmf.add_edge(i,white,1,-a[i].first);
+        mcmf.add_edge(i,white,1,-a[i].first); // x (-1)
         mcmf.add_edge(i,black,1,-a[i].second);
         mcmf.add_edge_from_source(i,1,0);
     }
     mcmf.add_edge_to_sink(white,15,0);
     mcmf.add_edge_to_sink(black,15,0);
-    printf("%d\n",-mcmf.flow().second);
+    printf("%d\n",-mcmf.flow().second); // x (-1)
     return 0;
 }

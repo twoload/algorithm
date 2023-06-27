@@ -211,7 +211,7 @@ int main() {
             mcmf.add_edge(i, m+j+1, 1, walk*d[from][car[j]] + drive*d[car[j]][to]);
         }
     }
-    mcmf.add_edge_to_sink(m, inf, 0);
+    mcmf.add_edge_to_sink(m, inf, 0); // inf by walk
     for (int j=0; j<c; j++) {
         mcmf.add_edge_to_sink(m+j+1, 1, 0);
     }

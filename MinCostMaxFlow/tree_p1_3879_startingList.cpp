@@ -133,12 +133,12 @@ int main() {
         for (int i=0; i<n; i++) {
             for (int j=0; j<n; j++) {
                 if (a[i][j]) {
-                    mcmf.add_edge(i,j+n,1,-a[i][j]);
+                    mcmf.add_edge(i,j+n,1,-a[i][j]); // cost x -1
                 }
             }
         }
         auto ans = mcmf.flow();
-        cout << -ans.second << '\n';
+        cout << -ans.second << '\n'; // ans x -1
     }
     return 0;
 }
