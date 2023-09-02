@@ -6,31 +6,32 @@
 
 n = int(input())
 a = list(map(int, input().split()))
-d = [0]*(n+1)
-dr = [0]*(n+1)
+d = [0]*n #(n+1)
+dr = [0]*n #(n+1)
 
 for i in range(n):
     d[i] = a[i]
     dr[i] = a[i]
 
 for i in range(n):
-    if i-1 < 0:
+    if i == 0: #if i-1 < 0:
         continue
     if d[i] < d[i-1]+a[i]:
         d[i] = d[i-1]+a[i]
 
 for i in range(n-1, -1, -1):
-    if i+1 > n-1:
+    if i == n-1:#if i+1 > n-1:
         continue
     if dr[i] < dr[i+1]+a[i]:
         dr[i] = dr[i+1]+a[i]
         
 ans = max(d)
-for k in range(n):
-    if k-1 < 0:
-        continue
-    if k+1 > n-1:
-        continue
+#for k in range(n):
+for k in range(1, n-1): #0 | 1,2,3,...n-2 | n-1
+    #if k-1 < 0:
+    #    continue
+    #if k+1 > n-1:
+    #    continue
     if ans < d[k-1] + dr[k+1]:
         ans = d[k-1] + dr[k+1]
         
