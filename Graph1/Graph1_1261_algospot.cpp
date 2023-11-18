@@ -16,3 +16,7 @@ using namespace std;
 
 // BFS
 
+int d[555][555];
+int a[555][555];
+int n,m;
+int 
